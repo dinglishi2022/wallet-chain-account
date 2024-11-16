@@ -344,7 +344,7 @@ type TxStructure struct {
 	ToAddress       string `json:"to_address"`
 	TokenId         string `json:"token_id"`
 	Value           string `json:"value"`
-	FromPrivateKey  string `json:"from_privatekey"`
+	Signature       string `json:"signature,omitempty"`
 }
 
 type GetLatestBlockhashResponse struct {

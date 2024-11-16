@@ -310,7 +310,7 @@ func TestChainAdaptor_VerifySignedTransaction(t *testing.T) {
 	resp, err := adaptor.VerifySignedTransaction(&account.VerifyTransactionRequest{
 		Chain:     ChainName,
 		Network:   "mainnet",
-		Signature: "4MSGKyqDVHeGMWmSPHm5yDEmUcMdycc3LQsEq1Mu8HHGUjrUNRLV4TJPT1sbTyhyRhpMSdRW1ANty84asVQnEsmb2RupewnYX2jNjDobQ2deRA5q6sMcCrBVTeKjZ25PKuGKcxYgXDSEe2SZ6DPvg9BTLZgEKWTxNKKKGP4VPgYefhQ7grm3X9DHBnkLEpfxLUDzeGeMbESCPVw62wk1SVN1rzEGzpTfauvq3SzQb8n1PjAVaeSLkHqyy734yMJVvwWonPBDWQMAVwWomf4cFMKfQboR8ZBsp9cU7",
+		Signature: "6MHBLrr7hqZEgz9nbb5GDkwskRPx8Ua36jFRLjWhTtm5K3pH7BC9pjrALtHz4Q7Wfbme8LspJP8oLNR4k7m3WF6fec3HpNGqoNbpQn1JXm9SHVbjechg9ckWcd5yfTBbFe6FaRzLV4uy9EXCkRJfurnFAFMCa3W6GBJjy6tmMFuYauaUD5t2LdiU8WYkTwcBN2PKxAv48aH5NsHRgDZzr3cDeBk33DAPQFBCwWZoRVkKiUtnYJdXFZgFh4VbULSQ22ggrPugJvVE2FxyfV49EeC6UBuiJsMFPMjkT",
 	})
 	if err != nil {
 		log.Error("TestChainAdaptor_VerifySignedTransaction failed:", err)
@@ -322,13 +322,13 @@ func TestChainAdaptor_VerifySignedTransaction(t *testing.T) {
 func createTestBase64Tx() string {
 
 	testTx := TxStructure{
-		Nonce:           "7cNmDJkzZLyXqP9q6ccznkuy4UkxiJCEu9QnWAXcrwDe",
+		Nonce:           "EGzqfetZEBPq7LFba6Qk8J9f89rHEwcFTW9A4Mspk6ub",
 		FromAddress:     "7YcpSkLK7gnSJ4JpysHR9BQgwe2gfffRQmMxHDbNf5ve",
 		ToAddress:       "EUVrmoaKaSsHNkMFw7mVARR522wwH41BFRMha3WC8gha",
-		Value:           "0.66",
-		FromPrivateKey:  "",
+		Value:           "0.001",
 		ContractAddress: "So11111111111111111111111111111111111111112", //5VzPuctbhMdqZBpxgxHCyH41sSckqPEKZ7qxbdgMN29Fbvmnpy3x6GcmUFxFw98oy3LcEEVCxwdr4gyQwcboSW6C
 		//ContractAddress: "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",//3L64aQvAmdhbaZJFdWXTSjLgmH1GwBhNE8eezqCFAHRvj9a76bwXoarivTSjzAJLiJ48CxtZ5Zke3djnfhuckKs
+		Signature: "931f9ff20e7144dcf4652e2452b46182c2a4791f42cf2ad6936fa5609556ecc045521cb72e67ce3fadf24c633acf59fc9cb360e549bfa059a02dd564d8bc0205",
 	}
 
 	jsonBytes, err := json.Marshal(testTx)
