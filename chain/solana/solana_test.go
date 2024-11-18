@@ -310,7 +310,7 @@ func TestChainAdaptor_VerifySignedTransaction(t *testing.T) {
 	resp, err := adaptor.VerifySignedTransaction(&account.VerifyTransactionRequest{
 		Chain:     ChainName,
 		Network:   "mainnet",
-		Signature: "6MHBLrr7hqZEgz9nbb5GDkwskRPx8Ua36jFRLjWhTtm5K3pH7BC9pjrALtHz4Q7Wfbme8LspJP8oLNR4k7m3WF6fec3HpNGqoNbpQn1JXm9SHVbjechg9ckWcd5yfTBbFe6FaRzLV4uy9EXCkRJfurnFAFMCa3W6GBJjy6tmMFuYauaUD5t2LdiU8WYkTwcBN2PKxAv48aH5NsHRgDZzr3cDeBk33DAPQFBCwWZoRVkKiUtnYJdXFZgFh4VbULSQ22ggrPugJvVE2FxyfV49EeC6UBuiJsMFPMjkT",
+		Signature: "4PDQnHWBNSD12Lv2ZL7ZvAN6qxNryKL5rY69q69P2Pa2CDkYy35PFs4uny55pAr8VNL6BfxQaxiuDFYt1hJtqt7C5ZVo6K8zpagrqLdBBxAKiuvE4DEw8gksmGPJaahPGd1RNHbVicMRm5gKPk8vHQ1sJbEwJCM7nCcgYGbQxFvUrCc23BMmmGL2c5KvrQYru7qEfWU8kR8UcZMRmgWDJ7MGp5p85LTW655o6qZ3ohEzmXVf1mSGj7ENxCEeQE6FvhHxH4Xny2Whex85hVVGzztcrBk3NBsgY5SGuJw5q2sPQQZo4x7bNJJuAmySMxZwmM36saEZZPxJPh",
 	})
 	if err != nil {
 		log.Error("TestChainAdaptor_VerifySignedTransaction failed:", err)
@@ -322,13 +322,13 @@ func TestChainAdaptor_VerifySignedTransaction(t *testing.T) {
 func createTestBase64Tx() string {
 
 	testTx := TxStructure{
-		Nonce:           "EGzqfetZEBPq7LFba6Qk8J9f89rHEwcFTW9A4Mspk6ub",
-		FromAddress:     "7YcpSkLK7gnSJ4JpysHR9BQgwe2gfffRQmMxHDbNf5ve",
-		ToAddress:       "EUVrmoaKaSsHNkMFw7mVARR522wwH41BFRMha3WC8gha",
-		Value:           "0.001",
-		ContractAddress: "So11111111111111111111111111111111111111112", //5VzPuctbhMdqZBpxgxHCyH41sSckqPEKZ7qxbdgMN29Fbvmnpy3x6GcmUFxFw98oy3LcEEVCxwdr4gyQwcboSW6C
-		//ContractAddress: "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",//3L64aQvAmdhbaZJFdWXTSjLgmH1GwBhNE8eezqCFAHRvj9a76bwXoarivTSjzAJLiJ48CxtZ5Zke3djnfhuckKs
-		Signature: "931f9ff20e7144dcf4652e2452b46182c2a4791f42cf2ad6936fa5609556ecc045521cb72e67ce3fadf24c633acf59fc9cb360e549bfa059a02dd564d8bc0205",
+		Nonce:       "BDNPPBF4UHF76iMXcsvQXeBr9K7bEyo92GdpWBfMoxb3",
+		FromAddress: "7YcpSkLK7gnSJ4JpysHR9BQgwe2gfffRQmMxHDbNf5ve",
+		ToAddress:   "EUVrmoaKaSsHNkMFw7mVARR522wwH41BFRMha3WC8gha",
+		Value:       "0.001",
+		//ContractAddress: "So11111111111111111111111111111111111111112", //5VzPuctbhMdqZBpxgxHCyH41sSckqPEKZ7qxbdgMN29Fbvmnpy3x6GcmUFxFw98oy3LcEEVCxwdr4gyQwcboSW6C
+		ContractAddress: "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB", //3L64aQvAmdhbaZJFdWXTSjLgmH1GwBhNE8eezqCFAHRvj9a76bwXoarivTSjzAJLiJ48CxtZ5Zke3djnfhuckKs
+		Signature:       "61999700779d0d8be05b30de4838384f7397e2a7dc85ddc8974f6dd1d51109a2d82c9e1728efa95e7975389f200a3181b58b074a7b501acbc6bf1bd8956ad807",
 	}
 
 	jsonBytes, err := json.Marshal(testTx)

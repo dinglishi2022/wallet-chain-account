@@ -1,7 +1,6 @@
 package solana
 
 import (
-	"context"
 	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
@@ -301,6 +300,7 @@ func (c *ChainAdaptor) GetAccount(req *account.AccountRequest) (*account.Account
 		return response, err
 	}
 	accountInfoResp, err := c.solCli.GetAccountInfo(req.Address)
+
 	if err != nil {
 		err := fmt.Errorf("GetAccount GetAccountInfo failed: %w", err)
 		log.Error("err", err)
@@ -787,7 +787,8 @@ func (c *ChainAdaptor) CreateUnSignTransaction(req *account.UnSignTransactionReq
 			return nil, fmt.Errorf("Failed to find associated token address: %w", err)
 		}
 
-		tokenInfo, err := c.sdkClient.GetTokenSupply(context.Background(), mintPubkey, rpc.CommitmentFinalized)
+		//tokenInfo, err := c.sdkClient.GetTokenSupply(context.Background(), mintPubkey, rpc.CommitmentFinalized)
+		tokenInfo, err := GetTokenSupply(c.sdkClient, mintPubkey)
 		if err != nil {
 			return nil, fmt.Errorf("Failed to get token info: %w", err)
 		}
@@ -807,7 +808,9 @@ func (c *ChainAdaptor) CreateUnSignTransaction(req *account.UnSignTransactionReq
 			[]solana.PublicKey{},
 		).Build()
 
-		accountInfo, err := c.sdkClient.GetAccountInfo(context.Background(), toTokenAccount)
+		//accountInfo, err := c.sdkClient.GetAccountInfo(context.Background(), toTokenAccount)
+		accountInfo, err := GetAccountInfo(c.sdkClient, toTokenAccount)
+
 		if err != nil || accountInfo.Value == nil {
 			// Create associated token account if it doesn't exist
 			createATAInstruction := associatedtokenaccount.NewCreateInstruction(
@@ -913,7 +916,8 @@ func (c ChainAdaptor) BuildSignedTransaction(req *account.SignedTransactionReque
 			return nil, fmt.Errorf("Failed to find associated token address: %w", err)
 		}
 
-		tokenInfo, err := c.sdkClient.GetTokenSupply(context.Background(), mintPubkey, rpc.CommitmentFinalized)
+		//tokenInfo, err := c.sdkClient.GetTokenSupply(context.Background(), mintPubkey, rpc.CommitmentFinalized)
+		tokenInfo, err := GetTokenSupply(c.sdkClient, mintPubkey)
 		if err != nil {
 			return nil, fmt.Errorf("Failed to get token info: %w", err)
 		}
@@ -932,8 +936,9 @@ func (c ChainAdaptor) BuildSignedTransaction(req *account.SignedTransactionReque
 			fromPubkey,
 			[]solana.PublicKey{},
 		).Build()
+		//accountInfo, err := c.sdkClient.GetAccountInfo(context.Background(), toTokenAccount)
+		accountInfo, err := GetAccountInfo(c.sdkClient, toTokenAccount)
 
-		accountInfo, err := c.sdkClient.GetAccountInfo(context.Background(), toTokenAccount)
 		if err != nil || accountInfo.Value == nil {
 			// Create associated token account if it doesn't exist
 			createATAInstruction := associatedtokenaccount.NewCreateInstruction(
