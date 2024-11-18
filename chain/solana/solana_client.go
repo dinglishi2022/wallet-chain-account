@@ -991,10 +991,10 @@ func (s *solclient) SendTransaction(
 	if config == nil {
 		config = &SendTransactionRequest{
 			Commitment: string(Finalized),
-			Encoding:   "base64",
+			Encoding:   "base58",
 		}
 	}
-
+	fmt.Println("3:", signedTx)
 	requestBody := map[string]interface{}{
 		"jsonrpc": "2.0",
 		"id":      1,

@@ -5,15 +5,16 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"github.com/davecgh/go-spew/spew"
-	"github.com/gagliardetto/solana-go"
-	associatedtokenaccount "github.com/gagliardetto/solana-go/programs/associated-token-account"
-	"github.com/gagliardetto/solana-go/programs/token"
 	"math"
 	"sort"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/davecgh/go-spew/spew"
+	"github.com/gagliardetto/solana-go"
+	associatedtokenaccount "github.com/gagliardetto/solana-go/programs/associated-token-account"
+	"github.com/gagliardetto/solana-go/programs/token"
 
 	"github.com/ethereum/go-ethereum/log"
 	"github.com/gagliardetto/solana-go/programs/system"
@@ -370,17 +371,22 @@ func (c *ChainAdaptor) SendTx(req *account.SendTxRequest) (*account.SendTxRespon
 			TxHash: "",
 		}, nil
 	}
-	//simConfig := &SimulateRequest{
-	//	SigVerify:              true,
-	//	Commitment:             "confirmed",
-	//	ReplaceRecentBlockhash: false,
-	//	MinContextSlot:         0,
-	//}
+	log.Info("2:", req.RawTx)
+	// Send the transaction
+	txHash, err := c.solCli.SendTransaction(req.RawTx, nil)
+	if err != nil {
+		log.Error("Failed to send transaction", "err", err)
+		return &account.SendTxResponse{
+			Code:   common2.ReturnCode_ERROR,
+			Msg:    "failed to send transaction",
+			TxHash: "",
+		}, err
+	}
 
 	return &account.SendTxResponse{
-		Code: common2.ReturnCode_SUCCESS,
-		Msg:  "get tx response success",
-		//TxHash: TxResponse,
+		Code:   common2.ReturnCode_SUCCESS,
+		Msg:    "transaction sent successfully",
+		TxHash: txHash,
 	}, nil
 }
 
@@ -999,6 +1005,7 @@ func (c ChainAdaptor) BuildSignedTransaction(req *account.SignedTransactionReque
 
 	// Encode the serialized transaction to base58
 	base58Tx := base58.Encode(serializedTx)
+	//base64Tx := base64.StdEncoding.EncodeToString(serializedTx)
 	return &account.SignedTransactionResponse{
 		Code:     common2.ReturnCode_SUCCESS,
 		Msg:      "Successfully created signed transaction",
