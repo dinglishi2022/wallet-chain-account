@@ -310,7 +310,7 @@ func TestChainAdaptor_VerifySignedTransaction(t *testing.T) {
 	resp, err := adaptor.VerifySignedTransaction(&account.VerifyTransactionRequest{
 		Chain:     ChainName,
 		Network:   "mainnet",
-		Signature: "4PDQnHWBNSD12Lv2ZL7ZvAN6qxNryKL5rY69q69P2Pa2CDkYy35PFs4uny55pAr8VNL6BfxQaxiuDFYt1hJtqt7C5ZVo6K8zpagrqLdBBxAKiuvE4DEw8gksmGPJaahPGd1RNHbVicMRm5gKPk8vHQ1sJbEwJCM7nCcgYGbQxFvUrCc23BMmmGL2c5KvrQYru7qEfWU8kR8UcZMRmgWDJ7MGp5p85LTW655o6qZ3ohEzmXVf1mSGj7ENxCEeQE6FvhHxH4Xny2Whex85hVVGzztcrBk3NBsgY5SGuJw5q2sPQQZo4x7bNJJuAmySMxZwmM36saEZZPxJPh",
+		Signature: "4wp3bRabGaqg5mxbGcHt8YXPdxT5JiwbHFdeBBL4WvfGMv1CDeBBXrbZBtKCcj6qihWT2Tg7XoiLmzEJJMtN4k6s8XyukbZK1E1dnjdpsrCX6YMNycc6FQ7aMXeU2Zv3X7N6sffnP9fAuTpGATRa2nqctoVrAiPcEgBpjK6saEA2ccsxMyQFv2jMUCvpcwkvAWUEodLGeoAtbSYEBuMzqv1wLjJLYH3LFAk7tdB1LvfLmmhoW3PNwwKpaTYkarHWuMu8SwkEYzUUTdt2iPF2rzYKYgjsYCCCc4chW1MQNDXvrsBmmGcWyKAaEUSBLFdf699AbBAVmc3nvj",
 	})
 	if err != nil {
 		log.Error("TestChainAdaptor_VerifySignedTransaction failed:", err)
@@ -322,13 +322,13 @@ func TestChainAdaptor_VerifySignedTransaction(t *testing.T) {
 func createTestBase64Tx() string {
 
 	testTx := TxStructure{
-		Nonce:       "BDNPPBF4UHF76iMXcsvQXeBr9K7bEyo92GdpWBfMoxb3",
-		FromAddress: "7YcpSkLK7gnSJ4JpysHR9BQgwe2gfffRQmMxHDbNf5ve",
+		Nonce:       "HBFpnhYKLWxCCReiPSQxutZkgcWuBiZgm7EUPxbQiB9F",
+		FromAddress: "HhXh35Udy8ZUzVSyhptq51xViyshHyFYkiearNFaVvwE",
 		ToAddress:   "EUVrmoaKaSsHNkMFw7mVARR522wwH41BFRMha3WC8gha",
 		Value:       "0.001",
 		//ContractAddress: "So11111111111111111111111111111111111111112", //5VzPuctbhMdqZBpxgxHCyH41sSckqPEKZ7qxbdgMN29Fbvmnpy3x6GcmUFxFw98oy3LcEEVCxwdr4gyQwcboSW6C
 		ContractAddress: "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB", //3L64aQvAmdhbaZJFdWXTSjLgmH1GwBhNE8eezqCFAHRvj9a76bwXoarivTSjzAJLiJ48CxtZ5Zke3djnfhuckKs
-		Signature:       "61999700779d0d8be05b30de4838384f7397e2a7dc85ddc8974f6dd1d51109a2d82c9e1728efa95e7975389f200a3181b58b074a7b501acbc6bf1bd8956ad807",
+		Signature:       "0d97287afa83cc653cdf6d5867bfdff37148a7ec204d324626efd7af29ad0002aad407f1276ac4cbc6ecd7dd9c03eb9c6137929c8368a392cd21348f54fd690a",
 	}
 
 	jsonBytes, err := json.Marshal(testTx)
