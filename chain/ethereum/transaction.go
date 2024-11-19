@@ -56,6 +56,7 @@ func CreateLegacyUnSignTx(txData *types.LegacyTx, chainId *big.Int) string {
 
 func CreateEip1559UnSignTx(txData *types.DynamicFeeTx, chainId *big.Int) (string, error) {
 	tx := types.NewTx(txData)
+	// 签名者
 	signer := types.LatestSignerForChainID(chainId)
 	txHash := signer.Hash(tx)
 	return txHash.String(), nil
