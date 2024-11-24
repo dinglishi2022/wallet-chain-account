@@ -7,7 +7,7 @@ require (
 	github.com/aptos-labs/aptos-go-sdk v1.0.0
 	github.com/block-vision/sui-go-sdk v1.0.6
 	github.com/btcsuite/btcd/btcec/v2 v2.3.4
-	github.com/cosmos/cosmos-sdk v0.50.8
+	github.com/cosmos/cosmos-sdk v0.50.10
 	github.com/dapplink-labs/chain-explorer-api v0.0.3-0.20241104144036-620933cbffa1
 	github.com/ethereum/go-ethereum v1.14.11
 	github.com/fbsobreira/gotron-sdk v0.0.0-20230907131216-1e824406fe8c
@@ -164,15 +164,16 @@ require (
 	github.com/cometbft/cometbft v0.38.13
 	github.com/cosmos/btcutil v1.0.5
 	github.com/gagliardetto/solana-go v1.11.0
+	github.com/shopspring/decimal v1.3.1
 )
 
 require (
 	cosmossdk.io/collections v0.4.0 // indirect
-	cosmossdk.io/core v0.11.0 // indirect
-	cosmossdk.io/depinject v1.0.0-alpha.4 // indirect
+	cosmossdk.io/core v0.11.1 // indirect
+	cosmossdk.io/depinject v1.0.0 // indirect
 	cosmossdk.io/errors v1.0.1 // indirect
-	cosmossdk.io/store v1.1.0 // indirect
-	cosmossdk.io/x/tx v0.13.3 // indirect
+	cosmossdk.io/store v1.1.1 // indirect
+	cosmossdk.io/x/tx v0.13.5 // indirect
 	github.com/DataDog/datadog-go v3.2.0+incompatible // indirect
 	github.com/andres-erbsen/clock v0.0.0-20160526145045-9e14626cd129 // indirect
 	github.com/blendle/zapdriver v1.3.1 // indirect
@@ -219,3 +220,5 @@ require (
 )
 
 replace github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
+
+replace nhooyr.io/websocket v1.8.6 => ../websocket
