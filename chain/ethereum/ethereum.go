@@ -307,7 +307,7 @@ func (c *ChainAdaptor) GetFee(req *account.FeeRequest) (*account.FeeResponse, er
 }
 
 func (c *ChainAdaptor) SendTx(req *account.SendTxRequest) (*account.SendTxResponse, error) {
-	err := c.ethClient.SendRawTransaction(req.RawTx)
+	transaction, err := c.ethClient.SendRawTransaction(req.RawTx)
 	if err != nil {
 		return &account.SendTxResponse{
 			Code: common2.ReturnCode_ERROR,
@@ -315,8 +315,9 @@ func (c *ChainAdaptor) SendTx(req *account.SendTxRequest) (*account.SendTxRespon
 		}, err
 	}
 	return &account.SendTxResponse{
-		Code: common2.ReturnCode_SUCCESS,
-		Msg:  "send tx success",
+		Code:   common2.ReturnCode_SUCCESS,
+		Msg:    "send tx success",
+		TxHash: transaction.String(),
 	}, nil
 }
 
