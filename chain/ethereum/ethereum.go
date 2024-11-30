@@ -6,26 +6,25 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/shopspring/decimal"
 	"math/big"
 	"regexp"
 	"strconv"
 	"strings"
 	"time"
 
-	"github.com/pkg/errors"
-	"github.com/status-im/keycard-go/hexutils"
-
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/log"
+	"github.com/pkg/errors"
+	"github.com/shopspring/decimal"
+	"github.com/status-im/keycard-go/hexutils"
 
 	account2 "github.com/dapplink-labs/chain-explorer-api/common/account"
-
 	"github.com/dapplink-labs/wallet-chain-account/chain"
+	"github.com/dapplink-labs/wallet-chain-account/common/util"
 	"github.com/dapplink-labs/wallet-chain-account/config"
 	"github.com/dapplink-labs/wallet-chain-account/rpc/account"
 	common2 "github.com/dapplink-labs/wallet-chain-account/rpc/common"
@@ -118,6 +117,7 @@ func (c *ChainAdaptor) GetBlockHeaderByNumber(req *account.BlockHeaderNumberRequ
 			Msg:  "get latest block header fail",
 		}, nil
 	}
+
 	blockHead := &account.BlockHeader{
 		Hash:             blockInfo.Hash().String(),
 		ParentHash:       blockInfo.ParentHash.String(),
@@ -126,7 +126,7 @@ func (c *ChainAdaptor) GetBlockHeaderByNumber(req *account.BlockHeaderNumberRequ
 		Root:             blockInfo.Root.String(),
 		TxHash:           blockInfo.TxHash.String(),
 		ReceiptHash:      blockInfo.ReceiptHash.String(),
-		ParentBeaconRoot: blockInfo.ParentBeaconRoot.String(),
+		ParentBeaconRoot: common.Hash{}.String(),
 		Difficulty:       blockInfo.Difficulty.String(),
 		Number:           blockInfo.Number.String(),
 		GasLimit:         blockInfo.GasLimit,
@@ -136,9 +136,9 @@ func (c *ChainAdaptor) GetBlockHeaderByNumber(req *account.BlockHeaderNumberRequ
 		MixDigest:        blockInfo.MixDigest.String(),
 		Nonce:            strconv.FormatUint(blockInfo.Nonce.Uint64(), 10),
 		BaseFee:          blockInfo.BaseFee.String(),
-		WithdrawalsHash:  blockInfo.WithdrawalsHash.String(),
-		BlobGasUsed:      *blockInfo.BlobGasUsed,
-		ExcessBlobGas:    *blockInfo.ExcessBlobGas,
+		WithdrawalsHash:  common.Hash{}.String(),
+		BlobGasUsed:      0,
+		ExcessBlobGas:    0,
 	}
 	return &account.BlockHeaderResponse{
 		Code:        common2.ReturnCode_SUCCESS,
@@ -264,12 +264,19 @@ func (c *ChainAdaptor) GetAccount(req *account.AccountRequest) (*account.Account
 		}, err
 	}
 	log.Info("balance result", "balance=", balanceResult.Balance, "balanceStr=", balanceResult.BalanceStr)
+
+	balanceStr := "0"
+	if balanceResult.Balance != nil && balanceResult.Balance.Int() != nil {
+		balanceStr = balanceResult.Balance.Int().String()
+	}
+	sequence := strconv.FormatUint(uint64(nonceResult), 10)
+
 	return &account.AccountResponse{
 		Code:          common2.ReturnCode_SUCCESS,
 		Msg:           "get account response success",
 		AccountNumber: "0",
-		Sequence:      nonceResult.String(),
-		Balance:       balanceResult.Balance.Int().String(),
+		Sequence:      sequence,
+		Balance:       balanceStr,
 	}, nil
 }
 
@@ -517,6 +524,7 @@ func (c *ChainAdaptor) CreateUnSignTransaction(req *account.UnSignTransactionReq
 		Value:     amount,
 		Data:      buildData,
 	}
+	log.Info("ethereum CreateUnSignTransaction", util.ToJSONString(dFeeTx))
 	rawTx, err := CreateEip1559UnSignTx(dFeeTx, chainID)
 	if err != nil {
 		log.Error("create un sign tx fail", "err", err)
@@ -574,6 +582,7 @@ func (c *ChainAdaptor) BuildSignedTransaction(req *account.SignedTransactionRequ
 		Value:     amount,
 		Data:      buildData,
 	}
+	log.Info("ethereum BuildSignedTransaction", util.ToJSONString(dFeeTx))
 	sigByte, _ := hex.DecodeString(req.Signature)
 	rawTx, txHash, err := CreateEip1559SignedTx(dFeeTx, sigByte, chainID)
 	if err != nil {

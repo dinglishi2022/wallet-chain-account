@@ -1,8 +1,8 @@
 package ethereum
 
 import (
+	"encoding/json"
 	"fmt"
-	"github.com/dapplink-labs/wallet-chain-account/rpc/common"
 	"testing"
 
 	"github.com/ethereum/go-ethereum/log"
@@ -11,6 +11,7 @@ import (
 	"github.com/dapplink-labs/wallet-chain-account/chain"
 	"github.com/dapplink-labs/wallet-chain-account/config"
 	"github.com/dapplink-labs/wallet-chain-account/rpc/account"
+	"github.com/dapplink-labs/wallet-chain-account/rpc/common"
 )
 
 func setup() (chain.IChainAdaptor, error) {
@@ -39,7 +40,7 @@ func TestChainAdaptor_ConvertAddress(t *testing.T) {
 	resp, err := adaptor.ConvertAddress(&account.ConvertAddressRequest{
 		Chain:     ChainName,
 		Network:   "mainnet",
-		PublicKey: "02410c64fcd262512683b54576440e3d3033d825ef9f753b44c51ccdd70a7e90c3",
+		PublicKey: "048318535b54105d4a7aae60c08fc45f9687181b4fdfc625bd1a753fa7397fed753547f11ca8696646f2f3acb08e31016afac23e630c5d11f59f61fef57b0d2aa5",
 	})
 	if err != nil {
 		log.Error("convert address failed:", err)
@@ -48,6 +49,9 @@ func TestChainAdaptor_ConvertAddress(t *testing.T) {
 
 	assert.Equal(t, common.ReturnCode_SUCCESS, resp.Code)
 	fmt.Println(resp.Address)
+
+	respJson, _ := json.Marshal(resp)
+	t.Logf("响应: %s", respJson)
 }
 
 func TestChainAdaptor_ValidAddress(t *testing.T) {
@@ -155,15 +159,18 @@ func TestChainAdaptor_GetAccount(t *testing.T) {
 	}
 
 	resp, err := adaptor.GetAccount(&account.AccountRequest{
-		Chain:   ChainName,
-		Network: "mainnet",
-		Address: "0x8358d847Fc823097380c4996A3D3485D9D86941f",
+		Chain:           ChainName,
+		Network:         "mainnet",
+		Address:         "0xD79053a14BC465d9C1434d4A4fAbdeA7b6a2A94b",
+		ContractAddress: "0x00",
 	})
 	if err != nil {
 		return
 	}
 	assert.Equal(t, common.ReturnCode_SUCCESS, resp.Code)
-	fmt.Println(resp)
+
+	respJson, _ := json.Marshal(resp)
+	t.Logf("响应: %s", respJson)
 }
 
 func TestChainAdaptor_GetFee(t *testing.T) {
